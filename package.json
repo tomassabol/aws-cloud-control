@@ -1,0 +1,38 @@
+{
+  "name": "cloudcontrol",
+  "module": "src/index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.0",
+    "@ai-sdk/provider-utils": "^3.0.0",
+    "@aws-sdk/client-apigatewayv2": "^3.859.0",
+    "@aws-sdk/client-appconfig": "^3.859.0",
+    "@aws-sdk/client-cloudwatch": "^3.859.0",
+    "@aws-sdk/client-cost-explorer": "^3.859.0",
+    "@aws-sdk/client-dynamodb": "^3.859.0",
+    "@aws-sdk/client-ec2": "^3.859.0",
+    "@aws-sdk/client-greengrassv2": "^3.859.0",
+    "@aws-sdk/client-iam": "^3.859.0",
+    "@aws-sdk/client-lambda": "^3.859.0",
+    "@aws-sdk/client-opensearch": "^3.859.0",
+    "@aws-sdk/client-pricing": "^3.859.0",
+    "@aws-sdk/client-s3": "^3.859.0",
+    "@aws-sdk/client-sqs": "^3.859.0",
+    "@aws-sdk/credential-providers": "^3.859.0",
+    "@hono/zod-validator": "^0.7.2",
+    "@modelcontextprotocol/sdk": "^1.17.1",
+    "@tsconfig/bun": "^1.0.8",
+    "ai": "^5.0.0",
+    "aws-sdk": "^2.1692.0",
+    "hono": "^4.8.12",
+    "zod": "^4.0.14",
+    "zod-to-json-schema": "^3.24.6"
+  }
+}
