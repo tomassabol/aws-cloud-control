@@ -8,11 +8,11 @@ import { createS3Tools } from "./s3"
 import { createSQSTools } from "./sqs"
 
 export const tools: Tool[] = [
-  ...createCostTools(),
-  ...createCloudWatchTools(),
-  ...createS3Tools(),
-  ...createCloudFrontTools(),
-  ...createECSTools(),
-  ...createLambdaTools(),
-  ...createSQSTools(),
-]
+  createCostTools(),
+  createCloudWatchTools(),
+  createS3Tools(),
+  createCloudFrontTools(),
+  createECSTools(),
+  createLambdaTools(),
+  createSQSTools(),
+].flatMap((tools) => tools)
