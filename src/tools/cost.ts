@@ -10,11 +10,13 @@ import {
 } from "@aws-sdk/client-cost-explorer"
 import { z } from "zod"
 
+import { ToolError } from "~/utils/tool-error"
+
 import {
   AWS_REGIONS,
   type AwsRegion,
   DEFAULT_AWS_REGION,
-} from "../utils/credentials"
+} from "../utils/aws-region"
 import { type Tool, tool } from "../utils/tool"
 
 export function createCostTools(): Tool[] {
@@ -341,11 +343,11 @@ export function createCostTools(): Tool[] {
             nextPageToken: response.NextPageToken,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer get dimension values failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-dimension-values",
+            toolArgs: args,
+          })
         }
       },
     }),
@@ -538,11 +540,11 @@ export function createCostTools(): Tool[] {
               : undefined,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer get rightsizing recommendation failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-rightsizing-recommendation",
+            toolArgs: args,
+          })
         }
       },
     }),
@@ -914,11 +916,11 @@ export function createCostTools(): Tool[] {
                 : undefined,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer service costs analysis failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-service-costs",
+            toolArgs: args,
+          })
         }
       },
     }),
@@ -1046,11 +1048,11 @@ export function createCostTools(): Tool[] {
             nextPageToken: response.NextPageToken,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer get anomalies failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-anomalies",
+            toolArgs: args,
+          })
         }
       },
     }),
@@ -1202,11 +1204,11 @@ export function createCostTools(): Tool[] {
             count: forecastResultsByTime.length,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer get cost forecast failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-cost-forecast",
+            toolArgs: args,
+          })
         }
       },
     }),
@@ -1375,11 +1377,11 @@ export function createCostTools(): Tool[] {
             nextPageToken: response.NextPageToken,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer get tags failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-tags",
+            toolArgs: args,
+          })
         }
       },
     }),
@@ -1573,11 +1575,11 @@ export function createCostTools(): Tool[] {
               : undefined,
           }
         } catch (error) {
-          throw new Error(
-            `Cost Explorer get savings plans utilization failed: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          )
+          throw new ToolError({
+            error,
+            toolName: "aws_cost_get-savings-plans-utilization",
+            toolArgs: args,
+          })
         }
       },
     }),

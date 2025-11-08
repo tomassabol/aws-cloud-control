@@ -10,7 +10,7 @@ import {
   AWS_REGIONS,
   type AwsRegion,
   DEFAULT_AWS_REGION,
-} from "../utils/credentials"
+} from "../utils/aws-region"
 import { type Tool, tool } from "../utils/tool"
 
 export function createCloudWatchTools(): Tool[] {
