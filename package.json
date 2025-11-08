@@ -26,6 +26,7 @@
     "esbuild": "^0.25.12",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.2",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-markdown": "^3.0.1",
@@ -43,6 +44,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.927.0",
     "@aws-sdk/client-cost-explorer": "^3.927.0",
     "@aws-sdk/client-lambda": "^3.927.0",
     "@aws-sdk/client-sts": "^3.927.0",

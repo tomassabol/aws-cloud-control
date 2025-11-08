@@ -3,7 +3,11 @@
   "compilerOptions": {
     "types": ["node", "jest"],
     "lib": ["ESNext"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   },
   "include": ["infra/**/*.ts", "src/**/*.ts", "test/**/*.ts"],
   "exclude": ["node_modules", "dist"]
