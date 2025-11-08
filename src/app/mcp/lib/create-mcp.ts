@@ -36,80 +36,83 @@ export function createMcp(input: { tools: Tool[] }) {
       const parsed = RequestSchema.parse(message)
 
       const result = await (async () => {
-        if (parsed.method === "initialize")
-          return {
-            protocolVersion: "2025-06-18",
-            capabilities: {
-              tools: {},
-            },
-            serverInfo: {
-              name: "aws-cloudcontrol",
-              version: "1.0.0",
-            },
-          } satisfies InitializeResult
-
-        if (parsed.method === "tools/list") {
-          return {
-            tools: input.tools.map((tool) => ({
-              name: tool.name,
-              inputSchema: zodToJsonSchema(tool.args || z.object({}), "args")
-                .definitions!.args as JsonSchema7ObjectType,
-              description: tool.description,
-            })),
-          } satisfies ListToolsResult
-        }
-
-        if (parsed.method === "tools/call") {
-          const tool = input.tools.find(
-            (tool) => tool.name === parsed.params.name,
-          )
-          if (!tool) throw new Error("tool not found")
-
-          let args = parsed.params.arguments
-          if (tool.args) {
-            const validated = await tool.args["~standard"].validate(args)
-            if (validated.issues) {
-              return {
-                isError: true,
-                content: [
-                  {
-                    type: "text",
-                    text: JSON.stringify(validated.issues),
-                  },
-                ],
-              } satisfies CallToolResult
-            }
-            args = validated.value
+        switch (parsed.method) {
+          case "initialize": {
+            return {
+              protocolVersion: "2025-06-18",
+              capabilities: {
+                tools: {},
+              },
+              serverInfo: {
+                name: "aws-cloudcontrol",
+                version: "1.0.0",
+              },
+            } satisfies InitializeResult
           }
 
-          return tool
-            .run(args)
-            .catch(
-              (error: Error) =>
-                ({
+          case "tools/list": {
+            return {
+              tools: input.tools.map((tool) => ({
+                name: tool.name,
+                inputSchema: zodToJsonSchema(tool.args || z.object({}), "args")
+                  .definitions!.args as JsonSchema7ObjectType,
+                description: tool.description,
+              })),
+            } satisfies ListToolsResult
+          }
+
+          case "tools/call": {
+            const tool = input.tools.find(
+              (tool) => tool.name === parsed.params.name,
+            )
+            if (!tool) throw new Error("tool not found")
+
+            let args = parsed.params.arguments
+            if (tool.args) {
+              const validated = await tool.args["~standard"].validate(args)
+              if (validated.issues) {
+                return {
                   isError: true,
                   content: [
                     {
                       type: "text",
-                      text: error.message,
+                      text: JSON.stringify(validated.issues),
                     },
                   ],
-                }) satisfies CallToolResult,
-            )
-            .then(
-              (result: unknown) =>
-                ({
-                  content: [
-                    {
-                      type: "text",
-                      text: JSON.stringify(result, null, 2),
-                    },
-                  ],
-                }) satisfies CallToolResult,
-            )
-        }
+                } satisfies CallToolResult
+              }
+              args = validated.value
+            }
 
-        throw new Error("not implemented")
+            return tool
+              .run(args)
+              .catch(
+                (error: Error) =>
+                  ({
+                    isError: true,
+                    content: [
+                      {
+                        type: "text",
+                        text: error.message,
+                      },
+                    ],
+                  }) satisfies CallToolResult,
+              )
+              .then(
+                (result: unknown) =>
+                  ({
+                    content: [
+                      {
+                        type: "text",
+                        text: JSON.stringify(result, null, 2),
+                      },
+                    ],
+                  }) satisfies CallToolResult,
+              )
+          }
+          default:
+            throw new Error("not implemented")
+        }
       })()
 
       return {
