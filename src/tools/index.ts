@@ -5,6 +5,7 @@ import { createCostTools } from "./cost"
 import { createECSTools } from "./ecs"
 import { createLambdaTools } from "./lambda"
 import { createS3Tools } from "./s3"
+import { createSQSTools } from "./sqs"
 
 export const tools: Tool[] = [
   ...createCostTools(),
@@ -13,4 +14,5 @@ export const tools: Tool[] = [
   ...createCloudFrontTools(),
   ...createECSTools(),
   ...createLambdaTools(),
+  ...createSQSTools(),
 ]
