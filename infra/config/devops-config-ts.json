@@ -1,0 +1,18 @@
+{
+  "configVersion": "2",
+  "project": {
+    "name": "aws-cloudcontrol",
+    "stage": "ts",
+    "account": "849368888067",
+    "region": "eu-central-1"
+  },
+  "stacks": {
+    "devops-app-pipeline": {
+      "name": "devops-app-pipeline",
+      "stackType": "SHARED",
+      "repositoryOwner": "tomassabol",
+      "repositoryName": "aws-cloudcontrol",
+      "codestarConnectionArn": "arn:aws:codestar-connections:eu-central-1:849368888067:connection/1404961c-494f-40d2-a40c-254853031b30"
+    }
+  }
+}

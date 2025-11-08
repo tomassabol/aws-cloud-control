@@ -1,0 +1,18 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "details": {
+      "description": "Details about the error"
+    },
+    "error": {
+      "description": "Error message",
+      "type": "string"
+    },
+    "requestId": {
+      "description": "AWS Request ID, can be used to search CloudWatch logs for more details",
+      "type": "string"
+    }
+  },
+  "required": ["error"],
+  "type": "object"
+}

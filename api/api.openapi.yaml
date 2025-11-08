@@ -1,0 +1,191 @@
+openapi: 3.0.0
+servers:
+  - description: lambda-api API Server - Production
+    url: https://api.tomassabol.io/lambda-api
+  - description: lambda-api API Server - Test
+    url: https://api.tomassabol.io/lambda-api/test
+
+info:
+  title: lambda-api API
+  description: Shipping info API
+  version: "1.3.0"
+  contact:
+    email: wms@tomassabol.com
+
+tags:
+  - name: Shipping deadlines
+
+### Paths
+
+paths:
+  /v1/shipping/deadline:
+    parameters:
+      - $ref: "#/components/parameters/storeId"
+      - $ref: "#/components/parameters/shippingMethod"
+    get:
+      operationId: get-shipping-deadlines
+      summary: Get shipping deadlines
+      description: |
+        Get all shipping deadlines or specific shipping deadlines by `shippingMethod` and `storeId`.
+        > Query parameters are optional but if you use it, you need to provide `shippingMethod` and `storeId`. If no query parameters are provided, all shipping deadlines will be returned.
+      tags:
+        - Shipping deadlines
+      responses:
+        "200":
+          description: Shipping deadlines
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/GetShippingDeadlinesApiResponse.json"
+
+        "400":
+          $ref: "#/components/responses/invalid-request"
+
+        "404":
+          description: Shipping deadlines not found
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/ErrorApiResponse.json"
+              example:
+                error: "No deadlines found"
+
+        "500":
+          $ref: "#/components/responses/internal-error"
+
+    post:
+      description: |
+        Create a shipping deadline.
+      operationId: create-shipping-deadline
+      summary: Create shipping deadline
+      tags:
+        - Shipping deadlines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas/CreateShippingDeadlineApiRequest.json"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/CreateShippingDeadlineApiResponse.json"
+        "400":
+          $ref: "#/components/responses/invalid-request"
+        "500":
+          $ref: "#/components/responses/internal-error"
+
+    put:
+      description: |
+        Update a shipping deadline by `deadlineId`.
+      operationId: update-shipping-deadline
+      summary: Update shipping deadline
+      tags:
+        - Shipping deadlines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas/UpdateShippingDeadlineApiRequest.json"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/UpdateShippingDeadlineApiResponse.json"
+        "400":
+          $ref: "#/components/responses/invalid-request"
+        "500":
+          $ref: "#/components/responses/internal-error"
+
+  /v1/shipping/deadline/{deadlineId}:
+    parameters:
+      - name: deadlineId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      description: |
+        Delete a shipping deadline by `deadlineId`.
+      operationId: delete-shipping-deadline
+      summary: Delete shipping deadline
+      tags:
+        - Shipping deadlines
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/SuccessApiResponse.json"
+        "404":
+          description: Deadline not found
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas/ErrorApiResponse.json"
+        "500":
+          $ref: "#/components/responses/internal-error"
+
+### Components
+
+components:
+  parameters:
+    # Query parameter
+
+    storeId:
+      name: storeId
+      in: query
+      description: Store ID
+      required: false
+      schema:
+        type: string
+      example: "17"
+
+    shippingMethod:
+      name: shippingMethod
+      in: query
+      description: Shipping method
+      required: false
+      schema:
+        type: string
+      example: "allegro_dhl_kurier"
+
+  schemas:
+    error:
+      $ref: "./schemas/ErrorApiResponse.json"
+
+  responses:
+    invalid-request:
+      description: "Invalid request parameters"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/error"
+          example:
+            error: "Invalid request"
+            details:
+              - instancePath: ""
+                schemaPath: "#/required"
+                keyword: required
+                params:
+                missingProperty: example
+                message: must have required property 'example'
+            requestId: "b37d9af0-cc1e-4acb-a5f5-7fc9c968a759"
+
+    internal-error:
+      description: "Internal Error"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/error"
+          example:
+            error: "Internal error"
+            details: "See logs for more details."
+            requestId: "b37d9af0-cc1e-4acb-a5f5-7fc9c968a759"

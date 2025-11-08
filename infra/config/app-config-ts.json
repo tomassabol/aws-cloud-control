@@ -1,0 +1,14 @@
+{
+  "configVersion": "2",
+  "project": {
+    "name": "aws-cloudcontrol",
+    "stage": "ts",
+    "account": "849368888067",
+    "region": "eu-central-1"
+  },
+  "stacks": {
+    "app": {
+      "name": "app"
+    }
+  }
+}
