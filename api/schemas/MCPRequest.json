@@ -1,0 +1,62 @@
+{
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": ["string", "number"]
+        },
+        "jsonrpc": {
+          "const": "2.0",
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "params": {
+          "additionalProperties": false,
+          "properties": {
+            "_meta": {
+              "additionalProperties": false,
+              "properties": {
+                "progressToken": {
+                  "description": "If specified, the caller is requesting out-of-band progress notifications for this request (as represented by notifications/progress). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.",
+                  "type": ["string", "number"]
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": ["id", "jsonrpc", "method"],
+      "type": "object"
+    },
+    {
+      "additionalProperties": false,
+      "properties": {
+        "jsonrpc": {
+          "const": "2.0",
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "params": {
+          "additionalProperties": false,
+          "properties": {
+            "_meta": {
+              "additionalProperties": false,
+              "description": "See [MCP specification](https://github.com/modelcontextprotocol/modelcontextprotocol/blob/47339c03c143bb4ec01a26e721a1b8fe66634ebe/docs/specification/draft/basic/index.mdx#general-fields)\nfor notes on _meta usage.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": ["jsonrpc", "method"],
+      "type": "object"
+    }
+  ]
+}

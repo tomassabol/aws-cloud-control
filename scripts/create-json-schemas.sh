@@ -8,18 +8,15 @@
 SCHEMAS="\
   ErrorApiResponse \
   SuccessApiResponse \
-  GetShippingDeadlinesApiResponse \
-  CreateShippingDeadlineApiRequest \
-  CreateShippingDeadlineApiResponse \
-  UpdateShippingDeadlineApiRequest \
-  UpdateShippingDeadlineApiResponse \
+  MCPRequest \
+  MCPResponse \
   "
 
 ROOT=$(dirname $0)/..
-SOURCE="$ROOT/tsconfig.json"
-# SOURCE="$ROOT/src/api/types.ts" # Use specific file to speed up generation
+# SOURCE="$ROOT/tsconfig.json"
+SOURCE="$ROOT/src/api/types.ts" # Use specific file to speed up generation
 
-DESTINATION_PATH="$ROOT/docs/api/schemas"
+DESTINATION_PATH="$ROOT/api/schemas"
 
 TSJ="npx typescript-json-schema"
 TSJ_OPTIONS="--required --no-refs --noExtraProps --ignoreErrors"
@@ -46,10 +43,10 @@ fi
 # Create each schema from TypeScript type
 for SCHEMA in $SCHEMAS; do
   echo Generating JSON schema for $SCHEMA
-  $TSJ $SOURCE $SCHEMA $TSJ_OPTIONS | $STRIP > $DESTINATION_PATH/$SCHEMA.json
-  if [ $? != 0 ]; then
+  if ! $TSJ $SOURCE $SCHEMA $TSJ_OPTIONS 2>&1 | $STRIP > $DESTINATION_PATH/$SCHEMA.json; then
+    echo "Error: Failed to generate schema for $SCHEMA" >&2
     exit 1
   fi
 done
 
-npx prettier -w $DESTINATION_PATH
+npx --yes prettier -w $DESTINATION_PATH

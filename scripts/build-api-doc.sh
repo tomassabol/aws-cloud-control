@@ -4,13 +4,20 @@
 #
 
 ROOT=$(dirname $0)/..
-API_FOLDER=$ROOT/docs/api
+API_FOLDER=$ROOT/api
 BUILD_FOLDER=$API_FOLDER/.build
 
 
 rm -rf $BUILD_FOLDER
 mkdir -p $BUILD_FOLDER
 
+# Generate OpenAPI spec from code
+npm run generate:openapi
+if [ $? != 0 ]; then
+  exit 1
+fi
+
+# Generate JSON schemas
 $ROOT/scripts/create-json-schemas.sh
 if [ $? != 0 ]; then
   exit 1

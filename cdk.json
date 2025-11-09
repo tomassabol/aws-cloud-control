@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts infra/main",
+  "app": "bun infra/main",
   "versionReporting": false,
   "watch": {
     "include": ["infra/**"],

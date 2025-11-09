@@ -1,4 +1,8 @@
-import { type Tool } from "../utils/tool"
+import {
+  type JSONRPCNotification,
+  type JSONRPCRequest,
+  type JSONRPCResponse,
+} from "@modelcontextprotocol/sdk/types.js"
 
 export type ErrorApiResponse = {
   /**
@@ -21,6 +25,5 @@ export type SuccessApiResponse = {
   message: string
 }
 
-export type MCPRequest = {
-  tools: Tool[]
-}
+export type MCPRequest = JSONRPCRequest | JSONRPCNotification
+export type MCPResponse = JSONRPCResponse | null
