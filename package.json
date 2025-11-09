@@ -8,7 +8,8 @@
     "lint": "eslint . --ext .ts --max-warnings 0",
     "prepare": "husky install",
     "test": "jest --silent",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "dev": "NODE_ENV=development bun --watch src/dev.ts"
   },
   "devDependencies": {
     "@aws-sdk/types": "^3.922.0",
@@ -16,6 +17,7 @@
     "@tomassabol/eslint-config-aws": "^1.2.0",
     "@tsconfig/node22": "^22.0.2",
     "@types/aws-lambda": "^8.10.157",
+    "@types/bun": "^1.3.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.19.24",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -59,6 +61,8 @@
     "@tomassabol/aws-common": "^1.3.3",
     "@tomassabol/dynamodb-tools": "^1.0.19",
     "@tomassabol/lambda-api-toolkit": "^1.1.7",
+    "bun": "^1.3.2",
+    "hono": "^4.10.4",
     "zod": "^3.25.76"
   }
 }
