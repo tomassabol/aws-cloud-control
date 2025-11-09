@@ -116,6 +116,7 @@ export function createS3Tools(): Tool[] {
               response.CommonPrefixes?.map((prefix) => prefix.Prefix) || [],
           }
         } catch (error) {
+          console.error(error)
           throw new ToolError({
             error,
             toolName: "aws_s3_list_objects",

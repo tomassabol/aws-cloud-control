@@ -1,13 +1,15 @@
 /* eslint-disable no-console */
-import * as Bun from "bun"
 import { Hono } from "hono"
 
 import { createMcp } from "./app/mcp/lib/create-mcp"
 import { tools } from "./tools"
 
-if (process.env.NODE_ENV === "development") {
-  const app = new Hono().post("/mcp", async (c) => {
-    const body = await c.req.json()
+export type HonoApp = typeof app
+
+export const app = new Hono().post("/mcp", async (c) => {
+  const body = await c.req.json()
+
+  try {
     const result = await createMcp({ tools }).process(body)
 
     if (result === null) {
@@ -15,8 +17,22 @@ if (process.env.NODE_ENV === "development") {
     }
 
     return c.json(result)
-  })
+  } catch (error) {
+    return c.json({
+      jsonrpc: "2.0",
+      id: body.id,
+      error: {
+        code: -32602,
+        message: "Internal Server Error",
+      },
+    })
+  }
+})
 
-  console.log("Starting development server on port 3000")
-  Bun.serve({ port: 3000, fetch: app.fetch, development: true })
+// Only start the server when running directly with Bun (not when imported by tests)
+if (typeof Bun !== "undefined") {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  import("bun").then(({ serve }) => {
+    serve({ port: 3000, fetch: app.fetch, development: true })
+  })
 }

@@ -14,6 +14,8 @@ import {
 import { z } from "zod"
 import { type JsonSchema7ObjectType, zodToJsonSchema } from "zod-to-json-schema"
 
+import { PROTOCOL_VERSION } from "~/utils/protocol-version"
+
 import { type Tool } from "../../../utils/tool"
 
 const RequestSchema = z.union([
@@ -28,7 +30,7 @@ export function createMcp(input: { tools: Tool[] }) {
     async process(
       message: JSONRPCRequest | JSONRPCNotification,
     ): Promise<JSONRPCResponse | null> {
-      // Handle notifications (they don't have an id field and don't require a response)
+      // Server must not send a response to notifications - https://modelcontextprotocol.io/specification/2025-06-18/basic/index#notifications
       if (isJSONRPCNotification(message)) {
         return null
       }
@@ -39,7 +41,7 @@ export function createMcp(input: { tools: Tool[] }) {
         switch (parsed.method) {
           case "initialize": {
             return {
-              protocolVersion: "2025-06-18",
+              protocolVersion: PROTOCOL_VERSION,
               capabilities: {
                 tools: {},
               },

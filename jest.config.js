@@ -3,7 +3,7 @@ module.exports = {
   clearMocks: true,
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ["./test"],
+  roots: ["./test", "./src"],
 
   // The test environment that will be used for testing
   testEnvironment: "node",
@@ -18,14 +18,21 @@ module.exports = {
     ],
   },
 
+  // Transform ES modules from node_modules - allow Jest to handle them
+  transformIgnorePatterns: [
+    "node_modules/(?!(@modelcontextprotocol|zod-to-json-schema)/)",
+  ],
+
   // Run setup for all tests
   setupFiles: ["<rootDir>/test/_setup/init-env.ts"],
+
+  // Map path aliases
+  moduleNameMapper: {
+    "^~/(.*)$": "<rootDir>/src/$1",
+  },
 
   // Coverage
   collectCoverage: true,
   coverageDirectory: ".coverage",
   collectCoverageFrom: ["src/**/*.ts"],
-
-  // Export test results fo SonarQube scanner to process test results
-  testResultsProcessor: "jest-sonar-reporter",
 }
