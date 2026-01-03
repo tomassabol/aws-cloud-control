@@ -412,7 +412,7 @@ export function createCloudFrontTools(): Tool[] {
     }),
 
     tool({
-      name: "aws_cloudfront_list_origin_request_policies",
+      name: "aws_cloudfront_list_origin_req_policies",
       description: "List CloudFront origin request policies",
       args: z.object({
         region: z
@@ -460,7 +460,7 @@ export function createCloudFrontTools(): Tool[] {
         } catch (error) {
           throw new ToolError({
             error,
-            toolName: "aws_cloudfront_list_origin_request_policies",
+            toolName: "aws_cloudfront_list_origin_req_policies",
             toolArgs: args,
           })
         }
@@ -511,7 +511,7 @@ export function createCloudFrontTools(): Tool[] {
     }),
 
     tool({
-      name: "aws_cloudfront_list_response_headers_policies",
+      name: "aws_cloudfront_list_resp_hdr_policies",
       description: "List CloudFront response headers policies",
       args: z.object({
         region: z
@@ -559,7 +559,7 @@ export function createCloudFrontTools(): Tool[] {
         } catch (error) {
           throw new ToolError({
             error,
-            toolName: "aws_cloudfront_list_response_headers_policies",
+            toolName: "aws_cloudfront_list_resp_hdr_policies",
             toolArgs: args,
           })
         }
@@ -567,7 +567,7 @@ export function createCloudFrontTools(): Tool[] {
     }),
 
     tool({
-      name: "aws_cloudfront_get_response_headers_policy",
+      name: "aws_cloudfront_get_resp_hdr_policy",
       description: "Get details for a CloudFront response headers policy",
       args: z.object({
         region: z
@@ -589,7 +589,7 @@ export function createCloudFrontTools(): Tool[] {
           if (!policy) {
             throw new ToolError({
               message: "Response headers policy not found",
-              toolName: "aws_cloudfront_get_response_headers_policy",
+              toolName: "aws_cloudfront_get_resp_hdr_policy",
               toolArgs: args,
             })
           }
@@ -602,7 +602,7 @@ export function createCloudFrontTools(): Tool[] {
         } catch (error) {
           throw new ToolError({
             error,
-            toolName: "aws_cloudfront_get_response_headers_policy",
+            toolName: "aws_cloudfront_get_resp_hdr_policy",
             toolArgs: args,
           })
         }
@@ -610,7 +610,7 @@ export function createCloudFrontTools(): Tool[] {
     }),
 
     tool({
-      name: "aws_cloudfront_list_origin_access_controls",
+      name: "aws_cloudfront_list_origin_access_ctrls",
       description: "List CloudFront origin access controls",
       args: z.object({
         region: z
@@ -657,7 +657,7 @@ export function createCloudFrontTools(): Tool[] {
         } catch (error) {
           throw new ToolError({
             error,
-            toolName: "aws_cloudfront_list_origin_access_controls",
+            toolName: "aws_cloudfront_list_origin_access_ctrls",
             toolArgs: args,
           })
         }

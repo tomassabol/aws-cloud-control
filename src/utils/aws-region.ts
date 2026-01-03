@@ -26,7 +26,6 @@ export const AWS_REGIONS = [
   "us-east-2",
   "us-west-1",
   "us-west-2",
-  "us-west-2",
 ] as const
 export type AwsRegion = (typeof AWS_REGIONS)[number]
 export const DEFAULT_AWS_REGION: AwsRegion = "eu-central-1"
